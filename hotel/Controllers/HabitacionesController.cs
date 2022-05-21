@@ -56,7 +56,7 @@ namespace hotel.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdHabitacion,TipoHabitacion,Disponibilidad")] Habitacione habitacione)
+        public async Task<IActionResult> Create([Bind("TipoHabitacion,Disponibilidad")] Habitacione habitacione)
         {
             if (ModelState.IsValid)
             {

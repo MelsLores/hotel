@@ -35,7 +35,6 @@ namespace hotel.Models.dbModels
 
             modelBuilder.Entity<Habitacione>(entity =>
             {
-                entity.Property(e => e.IdHabitacion).ValueGeneratedNever();
 
                 entity.HasOne(d => d.TipoHabitacionNavigation)
                     .WithMany(p => p.Habitaciones)
@@ -108,6 +107,20 @@ namespace hotel.Models.dbModels
 
                 entity.Property(e => e.RutaImg).IsUnicode(false);
             });
+
+            modelBuilder.Entity<MetodoPago>().HasData(
+            new { IdMetodoPago=1,Nombre = "Efectivo"},
+            new { IdMetodoPago = 2, Nombre = "Tarjeta de débito" },
+            new { IdMetodoPago = 3, Nombre = "Tarjeta de crédito" }
+            );
+
+            modelBuilder.Entity<TipoHabitacion>().HasData(
+           new { IdTipoHabitacion=1, Nombre = "Sencilla",Descripcion="Esta habitación cuenta con una cama matrimonial y con excelente vista.",Costo=1500.00,CostoExPersona=300.00,RutaImg="/img/sencilla.png" },
+           new { IdTipoHabitacion = 2, Nombre = "Doble", Descripcion = "Esta habitación cuenta con dos camas matrimoniales.", Costo = 1800.00, CostoExPersona = 400.00, RutaImg = "/img/doble.png" },
+           new { IdTipoHabitacion = 3, Nombre = "Suit", Descripcion = "Esta habitación cuenta dos camas matrimoniales y con excelente vista.", Costo = 2000.00, CostoExPersona = 500.00, RutaImg = "/img/suit.png" },
+           new { IdTipoHabitacion = 4, Nombre = "Deluxe", Descripcion = "Esta habitación cuenta con una cama queen, jacuzzi y con excelente vista.", Costo = 2500.00, CostoExPersona = 600.00, RutaImg = "/img/deluxe.png" }
+           );
+
 
             OnModelCreatingPartial(modelBuilder);
         }

@@ -75,7 +75,7 @@ namespace hotel.Migrations
                     descripcion = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true),
                     costo = table.Column<double>(type: "float", nullable: false),
                     costoExPersona = table.Column<double>(type: "float", nullable: false),
-                    rutaImg = table.Column<string>(type: "varchar(256)", unicode: false, maxLength: 256, nullable: true)
+                    rutaImg = table.Column<string>(type: "varchar(MAX)", unicode: false, maxLength: 256, nullable: true)
                 },
                 constraints: table =>
                 {
@@ -223,7 +223,8 @@ namespace hotel.Migrations
                 name: "habitaciones",
                 columns: table => new
                 {
-                    idHabitacion = table.Column<int>(type: "int", nullable: false),
+                    idHabitacion = table.Column<int>(type: "int", nullable: false)
+                     .Annotation("SqlServer:Identity", "1, 1"),
                     tipoHabitacion = table.Column<int>(type: "int", nullable: false),
                     disponibilidad = table.Column<bool>(type: "bit", nullable: false)
                 },
