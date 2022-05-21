@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using hotel.Models.dbModels;
+using hotel.ViewModels;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,16 +11,30 @@ namespace hotel.Controllers
 {
     public class HabitacionesClienteController : Controller
     {
-        // GET: HabitacionesClienteController
-        public ActionResult Index()
+        private readonly hotelContext _dbcontext;
+
+        public HabitacionesClienteController(hotelContext dbcontext)
         {
-            return View();
+            _dbcontext = dbcontext;
         }
+
+        // GET: HabitacionesClienteController
+        
 
         // GET: HabitacionesClienteController/Details/5
         public ActionResult Details(int id)
         {
             return View();
+        }
+
+        public IActionResult Index()
+        {
+            List<TipoHabitacion> tipoHabitacion = _dbcontext.TipoHabitacions.ToList();
+            HabitacionesVM hvm = new HabitacionesVM
+            {
+                TipoHabitaciones = tipoHabitacion
+            };
+            return View(hvm);
         }
 
         // GET: HabitacionesClienteController/Create

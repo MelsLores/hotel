@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace hotel.Controllers
+namespace hotel.ViewModels
 {
-    public class THabit
+    public class HabitacionesVM
     {
-        public List<TipoHabitacion> tipoHabitacions { get; set; }
+        public List<TipoHabitacion> TipoHabitaciones { get; set; }
     }
 }
