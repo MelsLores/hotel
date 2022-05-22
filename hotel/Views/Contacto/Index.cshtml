@@ -1,0 +1,31 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Contacto";
+}
+
+<h1 class="text-center">Contacto</h1>
+<fieldset>
+
+    <legend>
+        Contacto
+    </legend>  
+</fieldset>
+<form method="POST">
+    
+        <div class="mb-3">
+            <label for="INombre" class="form-label">Nombre</label>
+            <input type="text" id="INombre" class="form-control" name="INombre">
+        </div>
+        <div class="mb-3">
+            <label for="Iemail" class="form-label">Correo electrónico</label>
+            <input type="email" id="Iemail" class="form-control" name="Iemail">
+        </div>
+        <div class="mb-3">
+            <label for="Itext" class="form-label">Comentario</label>
+            <textarea class="form-text" id="Itext"name="Itext">si sirve</textarea>
+        </div>
+        <input type="submit" class="btn btn-primary" >
+    
+</form>
