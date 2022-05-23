@@ -17,29 +17,30 @@ namespace hotel.Controllers
         string _val;
         private readonly hotelContext _context;
         private readonly hotelContext _dbcontext;
-
+        public List<Reseña> Resenas { get; set; }
         public Reseñas(hotelContext context, hotelContext dbcontext)
         {
             _context = context;
             _dbcontext = dbcontext;
         }
-
+        
 
         [HttpGet]
         [Authorize]
         public IActionResult Index()
         {
             ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre");
-
-
+            System.Diagnostics.Debug.WriteLine("hola bb");
             List<Reseña> reseñas = _dbcontext.Reseñas.ToList();
-            ResenasVM hvm = new ResenasVM
+            ResenasVM rvm = new ResenasVM
             {
+
                 Resenas = reseñas
             };
-            return View(hvm);
 
-        
+            return View();
+
+
         }
 
         /*public IActionResult Index(string Iselect, string Itext, string rating,string val) {

@@ -1,0 +1,38 @@
+﻿@model Reseñas
+@{
+}
+
+<div class=" container mt-5">
+    @foreach (Reseña reseña in Model.Resenas)
+    {
+
+        <div class="card">
+            <div class="row py-5 mx-5">
+
+                <div class="col-5">
+                    <h5>@reseña.IdUsuarioNavigation</h5>
+                    <br />
+                    <p>@reseña.Reseña1</p>
+                </div>
+                <div class="col-3">
+                    <h5>Tipo de habitación</h5>
+                    <br />
+                    <p>@reseña.TipoHabitacionNavigation</p>
+
+                </div>
+                <div class="col-4">
+                    <h5>Puntuación</h5>
+                    <br />
+                    <p>@reseña.Puntuacion</p>
+                    <br />
+                    <p>@reseña.Fecha</p>
+
+                </div>
+
+            </div>
+        </div>
+
+        <br />
+        <br />
+    }
+</div>
