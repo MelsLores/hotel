@@ -1,29 +1,47 @@
-﻿@model Reseñas
-@{
-}
-
+﻿
 <div class=" container mt-5">
-    @foreach (Reseña reseña in Model.Resenas)
+    @foreach (Reseña reseña in ViewBag.TotalResenas)
     {
 
         <div class="card">
             <div class="row py-5 mx-5">
 
                 <div class="col-5">
-                    <h5>@reseña.IdUsuarioNavigation</h5>
+                    <h5>Usuario #@reseña.IdUsuario</h5>
                     <br />
                     <p>@reseña.Reseña1</p>
                 </div>
                 <div class="col-3">
                     <h5>Tipo de habitación</h5>
                     <br />
-                    <p>@reseña.TipoHabitacionNavigation</p>
+                    <p>@reseña.TipoHabitacionNavigation.Nombre</p>
 
                 </div>
                 <div class="col-4">
                     <h5>Puntuación</h5>
                     <br />
                     <p>@reseña.Puntuacion</p>
+
+                    <div class="rating-wrap">
+                        <div class="centerSR">
+                            <fieldset class="rating">
+                                <input type="radio" id="5.0+@reseña.IdReseña" name="@reseña.IdReseña" value="5" /><label for="5.0+@reseña.IdReseña" class="full"></label>
+                                <input type="radio" id="4.5+@reseña.IdReseña" name="@reseña.IdReseña"  value="4.5" /><label for="4.5+@reseña.IdReseña" class="half"></label>
+                                <input type="radio" id="4.0+@reseña.IdReseña" name="@reseña.IdReseña"  value="4" /><label for="4.0+@reseña.IdReseña" class="full"></label>
+                                <input type="radio" id="3.5+@reseña.IdReseña" name="@reseña.IdReseña" value="3.5" /><label for="3.5+@reseña.IdReseña" class="half"></label>
+                                <input type="radio" id="3.0+@reseña.IdReseña" name="@reseña.IdReseña" value="3" /><label for="3.0+@reseña.IdReseña" class="full"></label>
+                                <input type="radio" id="2.5+@reseña.IdReseña" name="@reseña.IdReseña" value="2.5" /><label for="2.5+@reseña.IdReseña" class="half"></label>
+                                <input type="radio" id="2.0+@reseña.IdReseña" name="@reseña.IdReseña" value="2" /><label for="2.0+@reseña.IdReseña" class="full"></label>
+                                <input type="radio" id="1.5+@reseña.IdReseña" name="@reseña.IdReseña" value="1.5" /><label for="1.5+@reseña.IdReseña" class="half"></label>
+                                <input type="radio" id="1.0+@reseña.IdReseña" name="@reseña.IdReseña" value="1" /><label for="1.0+@reseña.IdReseña" class="full"></label>
+                                <input type="radio" id="0.5+@reseña.IdReseña" name="@reseña.IdReseña" value="0.5" /><label for="0.5+@reseña.IdReseña" class="half"></label>
+                                <input type="radio" id="@reseña.Puntuacion+@reseña.IdReseña" name="@reseña.IdReseña" value="@reseña.Puntuacion"  checked /><label for="@reseña.Puntuacion+@reseña.IdReseña" class="half"></label>
+                                                                 
+                            </fieldset>
+                            <br /><br />
+                        </div>
+
+                    </div>
                     <br />
                     <p>@reseña.Fecha</p>
 

@@ -32,6 +32,7 @@ namespace hotel.Controllers
             ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre");
             System.Diagnostics.Debug.WriteLine("hola bb");
             List<Reseña> reseñas = _dbcontext.Reseñas.ToList();
+            ViewBag.TotalResenas = reseñas;
             ResenasVM rvm = new ResenasVM
             {
 
