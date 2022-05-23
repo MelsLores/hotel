@@ -10,16 +10,16 @@ using System.Security.Claims;
 
 namespace hotel.Controllers
 {
-    public class HabitacionesController : Controller
+    public class TipoHabitacionsController : Controller
     {
         private readonly hotelContext _context;
 
-        public HabitacionesController(hotelContext context)
+        public TipoHabitacionsController(hotelContext context)
         {
             _context = context;
         }
 
-        // GET: Habitaciones
+        // GET: TipoHabitacions
         public async Task<IActionResult> Index()
         {
             int a = 0;
@@ -39,12 +39,10 @@ namespace hotel.Controllers
             {
                 ViewBag.amIadmin = 0;
             }
-
-            var hotelContext = _context.Habitaciones.Include(h => h.TipoHabitacionNavigation);
-            return View(await hotelContext.ToListAsync());
+            return View(await _context.TipoHabitacions.ToListAsync());
         }
 
-        // GET: Habitaciones/Details/5
+        // GET: TipoHabitacions/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -52,42 +50,39 @@ namespace hotel.Controllers
                 return NotFound();
             }
 
-            var habitacione = await _context.Habitaciones
-                .Include(h => h.TipoHabitacionNavigation)
-                .FirstOrDefaultAsync(m => m.IdHabitacion == id);
-            if (habitacione == null)
+            var tipoHabitacion = await _context.TipoHabitacions
+                .FirstOrDefaultAsync(m => m.IdTipoHabitacion == id);
+            if (tipoHabitacion == null)
             {
                 return NotFound();
             }
 
-            return View(habitacione);
+            return View(tipoHabitacion);
         }
 
-        // GET: Habitaciones/Create
+        // GET: TipoHabitacions/Create
         public IActionResult Create()
         {
-            ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre");
             return View();
         }
 
-        // POST: Habitaciones/Create
+        // POST: TipoHabitacions/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TipoHabitacion,Disponibilidad")] Habitacione habitacione)
+        public async Task<IActionResult> Create([Bind("IdTipoHabitacion,Nombre,Descripcion,Costo,CostoExPersona,RutaImg")] TipoHabitacion tipoHabitacion)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(habitacione);
+                _context.Add(tipoHabitacion);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre", habitacione.TipoHabitacion);
-            return View(habitacione);
+            return View(tipoHabitacion);
         }
 
-        // GET: Habitaciones/Edit/5
+        // GET: TipoHabitacions/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -95,23 +90,22 @@ namespace hotel.Controllers
                 return NotFound();
             }
 
-            var habitacione = await _context.Habitaciones.FindAsync(id);
-            if (habitacione == null)
+            var tipoHabitacion = await _context.TipoHabitacions.FindAsync(id);
+            if (tipoHabitacion == null)
             {
                 return NotFound();
             }
-            ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre", habitacione.TipoHabitacion);
-            return View(habitacione);
+            return View(tipoHabitacion);
         }
 
-        // POST: Habitaciones/Edit/5
+        // POST: TipoHabitacions/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdHabitacion,TipoHabitacion,Disponibilidad")] Habitacione habitacione)
+        public async Task<IActionResult> Edit(int id, [Bind("IdTipoHabitacion,Nombre,Descripcion,Costo,CostoExPersona,RutaImg")] TipoHabitacion tipoHabitacion)
         {
-            if (id != habitacione.IdHabitacion)
+            if (id != tipoHabitacion.IdTipoHabitacion)
             {
                 return NotFound();
             }
@@ -120,12 +114,12 @@ namespace hotel.Controllers
             {
                 try
                 {
-                    _context.Update(habitacione);
+                    _context.Update(tipoHabitacion);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HabitacioneExists(habitacione.IdHabitacion))
+                    if (!TipoHabitacionExists(tipoHabitacion.IdTipoHabitacion))
                     {
                         return NotFound();
                     }
@@ -136,11 +130,10 @@ namespace hotel.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre", habitacione.TipoHabitacion);
-            return View(habitacione);
+            return View(tipoHabitacion);
         }
 
-        // GET: Habitaciones/Delete/5
+        // GET: TipoHabitacions/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -148,31 +141,30 @@ namespace hotel.Controllers
                 return NotFound();
             }
 
-            var habitacione = await _context.Habitaciones
-                .Include(h => h.TipoHabitacionNavigation)
-                .FirstOrDefaultAsync(m => m.IdHabitacion == id);
-            if (habitacione == null)
+            var tipoHabitacion = await _context.TipoHabitacions
+                .FirstOrDefaultAsync(m => m.IdTipoHabitacion == id);
+            if (tipoHabitacion == null)
             {
                 return NotFound();
             }
 
-            return View(habitacione);
+            return View(tipoHabitacion);
         }
 
-        // POST: Habitaciones/Delete/5
+        // POST: TipoHabitacions/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var habitacione = await _context.Habitaciones.FindAsync(id);
-            _context.Habitaciones.Remove(habitacione);
+            var tipoHabitacion = await _context.TipoHabitacions.FindAsync(id);
+            _context.TipoHabitacions.Remove(tipoHabitacion);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HabitacioneExists(int id)
+        private bool TipoHabitacionExists(int id)
         {
-            return _context.Habitaciones.Any(e => e.IdHabitacion == id);
+            return _context.TipoHabitacions.Any(e => e.IdTipoHabitacion == id);
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace hotel.Controllers
@@ -11,12 +12,47 @@ namespace hotel.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            int a = 0;
+            try
+            {
+                a = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+            catch (Exception)
+            {
+            }
+
+            if (a == 1)
+            {
+                ViewBag.amIadmin = 1;
+            }
+            else
+            {
+                ViewBag.amIadmin = 0;
+            }
 
             return View();
         }
         [HttpPost]
         public IActionResult Index(string INombre,string Iemail,string Itext)
         {
+            int a = 0;
+            try
+            {
+                a = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+            catch (Exception)
+            {
+            }
+
+            if (a == 1)
+            {
+                ViewBag.amIadmin = 1;
+            }
+            else
+            {
+                ViewBag.amIadmin = 0;
+            }
+
             var fromAddress = "luahotel44@gmail.com";
             var toAddress = "uchihamels@gmail.com";
             var fromPassword = "hola1234*";

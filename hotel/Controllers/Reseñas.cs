@@ -29,8 +29,27 @@ namespace hotel.Controllers
         [Authorize]
         public IActionResult Index()
         {
+            int a = 0;
+            try
+            {
+                a = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+            catch (Exception)
+            {
+            }
+
+            if (a == 1)
+            {
+                ViewBag.amIadmin = 1;
+            }
+            else
+            {
+                ViewBag.amIadmin = 0;
+            }
+
             ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre");
             System.Diagnostics.Debug.WriteLine("hola bb");
+            
             List<Reseña> reseñas = _dbcontext.Reseñas.ToList();
             ViewBag.TotalResenas = reseñas;
             ResenasVM rvm = new ResenasVM

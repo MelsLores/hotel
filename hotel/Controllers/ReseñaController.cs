@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using hotel.Models.dbModels;
+using System.Security.Claims;
 
 namespace hotel.Controllers
 {
@@ -21,6 +22,24 @@ namespace hotel.Controllers
         // GET: Reseña
         public async Task<IActionResult> Index()
         {
+            int a = 0;
+            try
+            {
+                a = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            }
+            catch (Exception)
+            {
+            }
+
+            if (a == 1)
+            {
+                ViewBag.amIadmin = 1;
+            }
+            else
+            {
+                ViewBag.amIadmin = 0;
+            }
+
             var hotelContext = _context.Reseñas.Include(r => r.IdUsuarioNavigation).Include(r => r.TipoHabitacionNavigation);
             return View(await hotelContext.ToListAsync());
         }
