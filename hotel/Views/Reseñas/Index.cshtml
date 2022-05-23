@@ -1,0 +1,96 @@
+﻿
+@model hotel.Models.dbModels.Reseña
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Reseñas";
+
+}
+<h1 class="text-center">
+    Reseñas
+</h1>
+<div>
+    <div class=" container">
+
+        <div class="card">
+            <div class=" ">
+                <form class="row py-5 mx-5" method="POST" asp-action="">
+                    <div class="col-5">
+                        <label for="Ires" class="form-label">Comentario</label>
+                        <textarea asp-for="Reseña1" class="form-control" id="Reseña1" name="Reseña1"></textarea>
+                    </div>
+                    <div class="col-3">
+                        <label asp-for="TipoHabitacion" class="control-label"></label>
+                        <select asp-for="TipoHabitacion" id="TipoHabitacion" class="form-control" name="TipoHabitacion" asp-items="ViewBag.TipoHabitacion"></select>
+                        <br />
+
+                    </div>
+                    <div class="col-4">
+                        <label class="form-label">Puntuación</label>
+                        <div class="rating-wrap">
+                            <div class="centerSR">
+
+                                <fieldset class="rating">
+                                    <input type="radio" asp-for="Puntuacion" id="star5" name="Puntuacion" value="5" /><label for="star5" class="full" title="Awesome"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star4.5" name="Puntuacion" value="4.5" /><label for="star4.5" class="half"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star4" name="Puntuacion" value="4" /><label for="star4" class="full"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star3.5" name="Puntuacion" value="3.5" /><label for="star3.5" class="half"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star3" name="Puntuacion" value="3" /><label for="star3" class="full"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star2.5" name="Puntuacion" value="2.5" /><label for="star2.5" class="half"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star2" name="Puntuacion" value="2" /><label for="star2" class="full"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star1.5" name="Puntuacion" value="1.5" /><label for="star1.5" class="half"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star1" name="Puntuacion" value="1" /><label for="star1" class="full"></label>
+                                    <input type="radio" asp-for="Puntuacion" id="star0.5" name="Puntuacion" value="0.5" /><label for="star0.5" class="half"></label>
+                                </fieldset>
+                                <!--  <input id="Puntuacion"  asp-for="Puntuacion" name="Puntuacion" type="number" hidden />-->
+                            </div>
+
+                        </div>
+                        <br /><br /><br />
+                        <div class="d-flex align-content-end justify-content-end">
+                            <input class="btn btn-secondary" type="submit" value="Añadir" />
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <br /><br />
+
+    </div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<div class=" container">
+
+    <div class="card">
+        <div class="row py-5 mx-5">
+            
+                <div class="col-5">
+                    <h5></h5>
+                    <br />
+                    <p></p>
+                </div>
+                <div class="col-3">
+                    <h5>Tipo de habitación</h5>
+                    <br />
+                    <p></p>
+
+                </div>
+                <div class="col-4">
+                    <h5>Puntuación</h5>
+                    <br />
+                    <p></p>
+
+
+                </div>
+            
+        </div>
+    </div>
+
+    <br /><br />
+
+</div>

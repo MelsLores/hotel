@@ -58,7 +58,8 @@ namespace hotel.Areas.Identity.Pages.Account
             public string ApellidoM { get; set; }
             [Required]
             [DataType(DataType.PhoneNumber)]
-            public string Telefono { get; set; }
+            [Display(Name = "Teléfono")]
+            public string PhoneNumber { get; set; }
 
             [Required]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
@@ -84,7 +85,7 @@ namespace hotel.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,Nombre=Input.Nombre,ApellidoP = Input.ApellidoP,ApellidoM=Input.ApellidoM,Telefono= Input.Telefono };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email,Nombre=Input.Nombre,ApellidoP = Input.ApellidoP,ApellidoM=Input.ApellidoM,PhoneNumber= Input.PhoneNumber };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
