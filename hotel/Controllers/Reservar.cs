@@ -61,8 +61,7 @@ namespace hotel.Controllers
             */
 
             var ab = _context.Reservaciones.FromSqlRaw("SELECT * FROM reservaciones").ToList();
-            _context.Database.ExecuteSqlRaw("INSERT INTO reservaciones (idUsuario,fechaLlegada,fechaSalida,detalles,metodoPago,cantidadPersonas,costoTotal) VALUES ('" + Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) + "','2022-01-11 00:00:00.000','2022-01-13 00:00:00.000','a','1','1','20')");
-            var ab2 =_context.Reservaciones.FromSqlRaw("SELECT * FROM AspNetUsers").ToList();
+            //var ab2 =_context.Reservaciones.FromSqlRaw("SELECT * FROM AspNetUsers").ToList();
 
             System.Diagnostics.Debug.WriteLine(ab);
 
@@ -99,33 +98,84 @@ namespace hotel.Controllers
 
             };
             ViewBag.General = hvm;
-            return View();
+            return View(0);
         }
+        /*
+                [HttpPost]
+                [ValidateAntiForgeryToken]
+                public async Task<IActionResult> Index([Bind("IdReservacion,IdUsuario,Item1.FechaLlegada,FechaSalida,Detalles,MetodoPago,CantidadPersonas,CostoTotal")] Reservacione reservacione)
+                {
+                    if (ModelState.IsValid)
+                    {
+                        //_context.Reservaciones.FromSqlRaw("INSERT INTO reservaciones (idUsuario,fechaLlegada,fechaSalida,detalles,metodoPago,cantidadPersonas,costoTotal) VALUES ('" + Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) + ",'2022-01-11 00:00:00.000','2022-01-13 00:00:00.000','a','1','1','20')");
+
+
+                        reservacione.IdUsuario = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+                        string dateaux = reservacione.FechaLlegada.ToString();
+                        System.Diagnostics.Debug.WriteLine(dateaux);
+                        System.Diagnostics.Debug.WriteLine(reservacione.FechaLlegada);
+                        _context.Add(reservacione);
+
+
+
+                        await _context.SaveChangesAsync();
+                        return RedirectToAction(nameof(Index));
+                    }
+                    ViewData["IdUsuario"] = new SelectList(_context.Users, "Id", "Id", reservacione.IdUsuario);
+                    ViewData["MetodoPago"] = new SelectList(_context.MetodoPagos, "IdMetodoPago", "Nombre", reservacione.MetodoPago);
+                    return View(reservacione);
+                }*/
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index([Bind("IdReservacion,IdUsuario,Item1.FechaLlegada,FechaSalida,Detalles,MetodoPago,CantidadPersonas,CostoTotal")] Reservacione reservacione)
+        public async Task<IActionResult> Index(string FechaLlegada, string FechaSalida, string Detalles, string MetodoPago, string TipoHabitacion, string CantidadPersonas)
         {
-            if (ModelState.IsValid)
+            TipoHabitacion = TipoHabitacion.Split("-")[0];
+            var tp = Int32.Parse(TipoHabitacion);
+            double costoT=0;
+            List<TipoHabitacion> tipoHabitacion = _dbcontext.TipoHabitacions.ToList();
+            foreach (TipoHabitacion habitac in tipoHabitacion)
             {
-                //_context.Reservaciones.FromSqlRaw("INSERT INTO reservaciones (idUsuario,fechaLlegada,fechaSalida,detalles,metodoPago,cantidadPersonas,costoTotal) VALUES ('" + Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) + ",'2022-01-11 00:00:00.000','2022-01-13 00:00:00.000','a','1','1','20')");
-               
+                if (habitac.IdTipoHabitacion == tp) {
+                    costoT = habitac.Costo;
+                }
 
-                reservacione.IdUsuario = Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
-                string dateaux = reservacione.FechaLlegada.ToString();
-                System.Diagnostics.Debug.WriteLine(dateaux);
-                System.Diagnostics.Debug.WriteLine(reservacione.FechaLlegada);
-                _context.Add(reservacione);
+                
+            }
+
+           
+            
+
+
+            try {
+                var habD = _context.Habitaciones.FromSqlRaw("SELECT TOP 1 * FROM habitaciones WHERE tipoHabitacion='" + tp + "' AND disponibilidad='True'").ToList();
+                System.Diagnostics.Debug.WriteLine(habD[0].IdHabitacion);
 
                 
 
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["IdUsuario"] = new SelectList(_context.Users, "Id", "Id", reservacione.IdUsuario);
-            ViewData["MetodoPago"] = new SelectList(_context.MetodoPagos, "IdMetodoPago", "Nombre", reservacione.MetodoPago);
-            return View(reservacione);
-        }
+                _context.Database.ExecuteSqlRaw("UPDATE habitaciones SET disponibilidad='False' WHERE idHabitacion='" + habD[0].IdHabitacion + "'");
 
+                _context.Database.ExecuteSqlRaw("INSERT INTO reservaciones (idUsuario,fechaLlegada,fechaSalida,detalles,metodoPago,cantidadPersonas,costoTotal) VALUES ('" + Int32.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value) + "','" + FechaLlegada + "','" + FechaSalida + "','" + Detalles + "','" + MetodoPago + "','" + CantidadPersonas + "','" + costoT + "')");
+                var lastID = _context.Reservaciones.FromSqlRaw("SELECT TOP 1 * FROM reservaciones ORDER BY idReservacion DESC ").ToList();
+
+
+                _context.Database.ExecuteSqlRaw("INSERT INTO reservacion_habitacion (idReservacion,idHabitacion) VALUES ('" + lastID[0].IdReservacion + "','" + habD[0].IdHabitacion + "')");
+
+
+            }
+            catch (Exception) {
+                Index();
+                return View(2);
+            }
+            /*********************************************
+             * 
+             * DECIR QUE NO HAY HABITACIONES Q NO SE HOSPEDE AQUI
+             * 
+             * *********************************************/
+
+            Object a= Index();
+            return View(1);
+        }
     }
 }

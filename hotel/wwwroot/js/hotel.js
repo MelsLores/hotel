@@ -10,5 +10,13 @@ for (let i = 0; i < star.length; i++) {
 		rating = i;
 	});
 }
+var aux = null;
+$("#select_rooms").change(function () {
+	console.log("hola");
+	console.log(this);
+	aux = this;
+	$("#ttl").text('Total: $' + this.value.split("-")[1]);
 
+});
 
+$(".modal").modal("show");
