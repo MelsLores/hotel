@@ -48,7 +48,7 @@ namespace hotel.Controllers
             }
 
             ViewData["TipoHabitacion"] = new SelectList(_context.TipoHabitacions, "IdTipoHabitacion", "Nombre");
-            System.Diagnostics.Debug.WriteLine("hola bb");
+            System.Diagnostics.Debug.WriteLine("hola");
             
             List<Reseña> reseñas = _dbcontext.Reseñas.ToList();
             ViewBag.TotalResenas = reseñas;

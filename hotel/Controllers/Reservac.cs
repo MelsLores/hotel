@@ -11,6 +11,7 @@ namespace hotel.Controllers
     {
         public IActionResult Index()
         {
+
             int a = 0;
             try
             {
@@ -28,6 +29,10 @@ namespace hotel.Controllers
             {
                 ViewBag.amIadmin = 0;
             }
+
+
+            
+
 
             return View();
         }

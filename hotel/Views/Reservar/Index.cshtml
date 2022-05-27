@@ -1,10 +1,65 @@
-﻿@*
+﻿
+@model Tuple<hotel.Models.dbModels.Reservacione,hotel.Models.dbModels.TipoHabitacion>
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
+@{      
 }
 
 <div class="text-center">
     <h1 class="display-4">Reservaciones </h1>
     <p>Para empezar a disfrutar de una vacaciones con nostros reserva aquí: </p>
+</div>
+
+<div class="container">
+    <form method="POST">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label asp-for="Item1.FechaLlegada" class="control-label"></label>
+            <input asp-for="Item1.FechaLlegada" type="datetime-local" class="form-control" />
+            <span asp-validation-for="Item1.FechaLlegada" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Item1.FechaSalida" class="control-label"></label>
+            <input asp-for="Item1.FechaSalida" type="datetime-local" class="form-control" />
+            <span asp-validation-for="Item1.FechaSalida" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Item1.Detalles" class="control-label"></label>
+            <input asp-for="Item1.Detalles" class="form-control" />
+            <span asp-validation-for="Item1.Detalles" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <label asp-for="Item1.MetodoPago" class="control-label"></label>
+            <select asp-for="Item1.MetodoPago" class="form-control">
+                @foreach (MetodoPago metodo in ViewBag.MetodoPago)
+                {
+                    <option value="@metodo.IdMetodoPago">@metodo.Nombre</option>
+                }
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Item2.Nombre" class="control-label">Tipo de habitación</label>
+            <select asp-for="Item2.IdTipoHabitacion" class="form-control">
+                @foreach (TipoHabitacion tipo in ViewBag.General.TipoHabitaciones)
+                {
+                    <option value="@tipo.IdTipoHabitacion">@tipo.Nombre</option>
+                }
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label asp-for="Item1.CantidadPersonas" class="control-label"></label>
+            <input asp-for="Item1.CantidadPersonas" class="form-control" />
+            <span asp-validation-for="Item1.CantidadPersonas" class="text-danger"></span>
+        </div>
+
+
+        <div class="form-group">
+            <input type="submit" value="Reservar" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
