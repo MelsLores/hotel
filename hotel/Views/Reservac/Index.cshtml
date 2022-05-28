@@ -1,5 +1,54 @@
-﻿@*
+﻿@model int
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Reservaciones";
+    
 }
+
+<h1 class="text-center">Reservaciones</h1>
+
+<div class=" container mt-5">
+    
+    @foreach (ReservacionHabitacion reservacionH in ViewBag.ReservacionHabitacion)
+    {
+        @if (Model == reservacionH.IdReservacionNavigation.IdUsuario) { 
+        
+        
+        <div class="card ">
+            <div class="row px-5 py-5">
+                <div class="col-3">
+                    <h5>Fecha de llegada</h5>
+                    <p name="iDL">@reservacionH.IdReservacionNavigation.FechaLlegada</p>
+                    <br />
+                    <h5>Fecha de salida</h5>
+                    <p name="iDS">@reservacionH.IdReservacionNavigation.FechaSalida</p>
+                </div>
+                <div class="col-3">
+                    <h5>Habitación</h5>
+                    <p>@reservacionH.IdHabitacionNavigation.IdHabitacion</p>
+                    <br />
+                    <h5>Tipo de habitación</h5>
+                    <p>@reservacionH.IdHabitacionNavigation.TipoHabitacionNavigation.Nombre</p>
+                </div>
+                <div class="col-2">
+                    <h5>Personas</h5>
+                    <p>@reservacionH.IdReservacionNavigation.CantidadPersonas</p>
+                </div>
+                <div class="col-2">
+                    <h5>Costo total</h5>
+                    <p>@reservacionH.IdReservacionNavigation.CostoTotal</p>
+                </div>
+                <div class="col-2">
+                    <h5>Estatus</h5>
+                     <p>@reservacionH.IdHabitacionNavigation.Disponibilidad</p>
+                </div>
+            </div>
+        </div>
+
+        <br /><br />
+        }
+    }
+
+</div>

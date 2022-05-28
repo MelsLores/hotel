@@ -1,0 +1,111 @@
+﻿
+@model Tuple<hotel.Models.dbModels.ReservacionHabitacion,int>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    var date = Model.Item1.IdReservacionNavigation.FechaLlegada.Year + "-0" + Model.Item1.IdReservacionNavigation.FechaLlegada.Month + "-" + Model.Item1.IdReservacionNavigation.FechaLlegada.Day;
+    var date2 = Model.Item1.IdReservacionNavigation.FechaSalida.Year + "-0" + Model.Item1.IdReservacionNavigation.FechaSalida.Month + "-" + Model.Item1.IdReservacionNavigation.FechaSalida.Day;
+
+}
+@if (Model.Item2 == 2)
+{
+    <div class="modal" tabindex="-1" data-bs>
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lo sentimos.</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>No se encontraron habitaciones disponibles. Intente con otro tipo de habitación.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (Model.Item2 == 1)
+{
+    <div class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Gracias.</h5>
+                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Reservación hecha con éxito.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+
+
+<div class="text-center">
+    <h1 class="display-4">Reservaciones </h1>
+    <p>Para empezar a disfrutar de una vacaciones con nostros reserva aquí: </p>
+</div>
+
+<div class="container">
+    <form method="POST">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label name="" class="control-label">Fecha de llegada</label>
+            <input name="FechaLlegada" id="fechaLlegada"value="@date" type="date" class="form-control" />
+            
+        </div>
+        <div class="form-group">
+            <label name="FechaSalida" class="control-label">Fecha de salida</label>
+            <input name="FechaSalida" id="fechaSalida" value="Model.Item1" type="date" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label name="Detalles" class="control-label">Detalles</label>
+            <input name="Detalles" value="@Model.Item1.IdReservacionNavigation.Detalles" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label name="MetodoPago" class="control-label">Método de pago</label>
+            <select name="MetodoPago" value="@Model.Item1.IdReservacionNavigation.MetodoPago" class="form-control">
+                @foreach (MetodoPago metodo in ViewBag.MetodoPago)
+                {
+                    <option value="@metodo.IdMetodoPago">@metodo.Nombre</option>
+                }
+            </select>
+
+        </div>
+
+        <div class="form-group">
+            <label name="TipoHabitacion" class="control-label">Tipo de habitación</label>
+            <select name="TipoHabitacion" id="tipoHabitacion" value="@Model.Item1.IdHabitacionNavigation.TipoHabitacion-@Model.Item1.IdReservacionNavigation.CostoTotal" id="select_rooms" class="form-control">
+                @foreach (TipoHabitacion tipo in ViewBag.General.TipoHabitaciones)
+                {
+                    <option value="@tipo.IdTipoHabitacion-@tipo.Costo" data-costo="@tipo.Costo">@tipo.Nombre</option>
+                }
+            </select>
+
+        </div>
+        <div class="form-group">
+            <label name="CantidadPersonas" class="control-label">Cantidad de personas</label>
+            <input name="CantidadPersonas" value="@Model.Item1.IdReservacionNavigation.CantidadPersonas" class="form-control" />
+
+        </div>
+
+        <div class="form-group d-flex align-content-end">
+            <label id="ttl">Total: </label>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Reservar" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+<script>document.getElementById("fechaLlegada").value="@date";document.getElementById("fechaSalida").value="@date2";</script>
