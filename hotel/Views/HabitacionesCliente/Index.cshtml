@@ -3,13 +3,14 @@
 @{
     ViewData["Title"] = "Habitaciones";
 }
+<link rel="stylesheet" href="~/css/style.css" />
 
 <h1 class="text-center">Habitaciones</h1>
 
 <div class=" container mt-5">
     @foreach (TipoHabitacion tipoHabitacion in Model.TipoHabitaciones)
     {
-        <div class="card"  data-background="color" data-color="blue">
+        <div class="card">
             <div class="row">
                 <div class="col-6">
                     <img src="@tipoHabitacion.RutaImg" class="img-fluid" />
